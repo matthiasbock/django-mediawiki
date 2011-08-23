@@ -1,0 +1,31 @@
+{% extends "WikiApps.html" %}
+
+{% block title %}Kalender{% endblock %}
+
+{% block content %}
+
+{% for Termin in Termine %}
+{{ Termin.date|date:"d.m.Y" }} - {{ Termin.text }}<br/>
+{% endfor %}
+
+<table>
+{% for Zeile in Zeilen %}
+	<tr>
+	{% for Spalte in Zeile %}
+		<td>
+		{% for Termin in Spalte %}
+		{{ Termin }}<br/>
+		{% endfor %}
+		</td>
+	{% endfor %}
+	</tr>
+{% endfor %}
+</table>
+
+<hr/>
+
+<pre style="text-align:left;">
+{{ DEBUG }}
+</pre>
+
+{% endblock %}

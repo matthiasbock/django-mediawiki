@@ -1,0 +1,25 @@
+{% extends "main.html" %}
+
+{% block h1 %}Datei umbenennen{% endblock %}
+
+{% block content %}
+
+<form method="POST">
+
+<table border=0 cellpadding="7pt" cellspacing="5pt">
+	<tr>
+		<td>Alter Name:</td>
+		<td>Datei:<input type=text name=oldname value="MItfahrt Muenchen-Berlin 25.5.11.pdf" style="width:300px;" /></td>
+	</tr>
+	<tr>
+		<td>Neuer Name:</td>
+		<td>Datei:<input type=text name=newname value="Mitfahrt Muenchen-Berlin 25.5.11.pdf" style="width:300px;" /></td>
+	</tr>
+	<tr>
+		<td colspan=2 align=right><input type=submit value="Rename"/></td>
+	</tr>
+</table>
+
+</form>
+
+{% endblock %}
