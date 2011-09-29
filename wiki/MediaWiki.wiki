@@ -1,0 +1,5 @@
+#summary MediaWiki
+
+= MediaWiki =
+
+MediaWiki is a free wiki content management system initiated by the Wikimedia Foundation, which also initiated Wikipedia.
