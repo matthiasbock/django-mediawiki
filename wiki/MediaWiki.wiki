@@ -2,4 +2,8 @@
 
 = MediaWiki =
 
-MediaWiki is a free wiki content management system initiated by the Wikimedia Foundation, which also initiated Wikipedia.
+MediaWiki is a free wiki content management system developed by the Wikimedia Foundation, which also runs Wikipedia, and the community.
+
+Read more on Wikipedia:
+ * http://en.wikipedia.org/wiki/MediaWiki
+ * http://de.wikipedia.org/wiki/Mediawiki
