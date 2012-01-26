@@ -1,8 +1,5 @@
  * [Project]
  * [MediaWiki]
  * [Roadmap]
- * [Database Database structure]
- * [CreatePage Creating a page]
- * [DeletePage Deleting a page]
- * ...
+ * [Database Database layout]
  * [Legal]
