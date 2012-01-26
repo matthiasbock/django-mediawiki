@@ -2,6 +2,6 @@
 
 = Django Database =
 
- * each table requires a primary key, which is a auto-incrementing integer
+ * each table requires a primary key, which must be an auto-incrementing integer
+ * by default this primary key is called "id" or "ID", but may be renamed manually in the models.py of your Django app
  * other kinds of keys are disencouraged
- * by default the primary key is called "id" or "ID", but may be renamed manually in models.py
