@@ -1,0 +1,5 @@
+#summary Database layout
+
+= Database layout =
+
+ * http://www.mediawiki.org/wiki/Manual:Database_layout
