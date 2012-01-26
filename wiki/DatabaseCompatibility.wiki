@@ -1,0 +1,7 @@
+#summary Django Database Compatibility
+
+= Django Database =
+
+ * each table requires a primary key, which is a auto-incrementing integer
+ * other kinds of keys are disencouraged
+ * by default the primary key is called "id" or "ID", but may be renamed manually in models.py
