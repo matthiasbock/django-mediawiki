@@ -3,3 +3,11 @@
 = Database layout =
 
  * http://www.mediawiki.org/wiki/Manual:Database_layout
+
+== pages: table _page_ ==
+
+ * _ID_
+ * _namespace_
+ * _title_
+ * date last touched
+ * _ID_, _length_ and _is_redirect_ of current content
