@@ -2,4 +2,3 @@
  * [MediaWiki]
  * [Roadmap]
  * [Database Database layout]
- * [Legal]
