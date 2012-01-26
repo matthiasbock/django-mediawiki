@@ -2,17 +2,8 @@
 
 = django-mediawiki =
 
-This Python library shall provide you and especially your Django applications with the ability to access the (mysql) database underlying your [http://www.mediawiki.org/ MediaWiki] installation. It thereby enables you to use Django's easy database access methods to create apps and bots capable of reading from and writing to your Wiki, fulfilling more sophisticated tasks than the mediawiki PHP web interface would allow.
+This Python library shall provide a DAL (database abstraction layer) for your [http://www.mediawiki.org/ MediaWiki] installation.
 
-= Goals =
+It enables you to use Django's easy database access methods to create apps and bots capable of reading from and writing to your Wiki, fulfilling more sophisticated tasks than the mediawiki PHP web interface would allow.
 
-For now, the main goal of this project is to allow for simultaneuous database manipulation from "external" (non-mediawiki) applications.
-It is not to replace the MediaWiki PHP interface with a Django interface.
-Of course, the library would allow for such an undertaking as soon as it works
-and I would personally appreciate it, since it would be a much more readable code (Python), but the PHP interface is okay for me and probably also the more efficient one when it comes to high page access frequencies.
-
-= Join =
-
-This project is a huge undertaking.
-
-If you want to join in, feel free to contact me.
+The main difference to [http://www.mediawiki.org/wiki/API:Client_code#Python other implementations] is, that you do not need any PHP, since the database is accessed directly.
