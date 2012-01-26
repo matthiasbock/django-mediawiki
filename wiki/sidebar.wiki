@@ -2,3 +2,4 @@
  * [MediaWiki]
  * [Roadmap]
  * [Database Database layout]
+ * [DatabaseCompatibility Django database compatibility]
