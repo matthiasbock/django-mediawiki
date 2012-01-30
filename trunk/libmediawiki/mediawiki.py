@@ -2,6 +2,7 @@
 # -*- coding: iso-8859-15 -*-
 
 import MySQLdb
+from Defines import *
 
 class User:
 	def __init__(self, q):
@@ -9,8 +10,14 @@ class User:
 		self.user_name = q[1]
 		self.user_real_name = q[2]
 
+class Page:
+	def __init__(self, q):
+		self.page_id = q[0]
+		self.page_namespace = q[1]
+		self.page_title = q[2]
+
 class Session:
-	def __init__(self, host='localhost', port=3306, database=None, username=None, password=None):
+	def __init__(self, host='localhost', port=3306, database='mediawiki', username='guest', password=''):
 		self.database = MySQLdb.connect(host, username, password, database, port=int(port))
 		self.database.apilevel = "2.0"
 		self.database.threadsafety = 2
@@ -18,8 +25,11 @@ class Session:
 
 	def query(self, q):
 		cursor = self.database.cursor()
+		print q
 		cursor.execute(q)
-		return cursor.fetchall() 
+		result = cursor.fetchall() 
+		print len(result)
+		return result
 
 	def getUsers(self):
 		results = []
@@ -28,7 +38,10 @@ class Session:
 		return results
 
 	def getCategories(self, parent):
-		return[]
+		results = []
+		for p in self.query("SELECT * FROM page WHERE `page_namespace` = "+str(NS_CATEGORY)):
+			results.append( Page(p) )
+		return results
 
 	def getPages(self, parent):
 		return []
