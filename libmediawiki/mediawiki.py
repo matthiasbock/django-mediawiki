@@ -3,7 +3,11 @@
 
 import MySQLdb
 
-from user import User
+class User:
+	def __init__(self, q):
+		self.user_id = q[0]
+		self.user_name = q[1]
+		self.user_real_name = q[2]
 
 class Session:
 	def __init__(self, host='localhost', port=3306, database=None, username=None, password=None):
@@ -19,13 +23,13 @@ class Session:
 
 	def getUsers(self):
 		results = []
-#		for user in self.query():
-#			results.append( User(user) )
-		return self.query("""FROM "auth_user" SELECT *""") #results
+		for user in self.query("SELECT * FROM user"):
+			results.append( User(user) )
+		return results
 
-	def getCategories(parent):
+	def getCategories(self, parent):
 		return[]
 
-	def getPages(parent):
+	def getPages(self, parent):
 		return []
 
