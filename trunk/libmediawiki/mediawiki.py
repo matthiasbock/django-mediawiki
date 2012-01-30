@@ -1,19 +1,31 @@
 #!/usr/bin/python
 # -*- coding: iso-8859-15 -*-
 
-from database import Database
+import MySQLdb
+
 from user import User
 
 class Session:
 	def __init__(self, host='localhost', port=3306, database=None, username=None, password=None):
-		self.database = Database()
-		self.database.connect(host, port)
-		self.database.login(username, password)
-		self.database.open(database)
+		self.database = MySQLdb.connect(host, user, password, db)
+		self.database.apilevel = "2.0"
+		self.database.threadsafety = 2
+		self.database.paramstyle = "format"
 
-	def getusers(self):
+	def query(self, q):
+		cursor = self.database.cursor()
+		cursor.execute(q)
+		return cursor.fetchall() 
+
+	def getUsers(self):
 		results = []
-		for user in self.database.user.all():
+		for user in self.database.user.SELECT():
 			results.append( User(user) )
 		return results
+
+	def getCategories(parent):
+		return[]
+
+	def getPages(parent):
+		return []
 
