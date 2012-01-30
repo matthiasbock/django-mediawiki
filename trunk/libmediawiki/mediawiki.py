@@ -17,18 +17,21 @@ class Page:
 		self.page_title = q[2]
 
 class Session:
-	def __init__(self, host='localhost', port=3306, database='mediawiki', username='guest', password=''):
+	def __init__(self, host='localhost', port=3306, database='mediawiki', username='guest', password='', debug=True):
 		self.database = MySQLdb.connect(host, username, password, database, port=int(port))
 		self.database.apilevel = "2.0"
 		self.database.threadsafety = 2
 		self.database.paramstyle = "format"
+		self.debug = debug
 
 	def query(self, q):
 		cursor = self.database.cursor()
-		print q
+		if self.debug:
+			print q
 		cursor.execute(q)
 		result = cursor.fetchall() 
-		print len(result)
+		if self.debug:
+			print len(result)
 		return result
 
 	def getUsers(self):
@@ -37,12 +40,26 @@ class Session:
 			results.append( User(user) )
 		return results
 
-	def getCategories(self, parent):
-		results = []
-		for p in self.query("SELECT * FROM page WHERE `page_namespace` = "+str(NS_CATEGORY)):
-			results.append( Page(p) )
-		return results
+	def getPage(self, ID=None, title=None):
+		if ID is not None:
+			q = self.query("SELECT * FROM page WHERE `page_id` = "+str(ID))
+			if len(q) == 1:
+				return Page(q[0])
+		elif title is not None:
+			q = self.query("SELECT * FROM page WHERE `page_title` = '"+str(title)+"'")
+			if len(q) == 1:
+				return Page(q[0])
+		return None
 
-	def getPages(self, parent):
-		return []
+	def getPages(self, parent=None, namespace=NS_MAIN):
+		results = []
+		if parent is None:
+			for p in self.query("SELECT * FROM page WHERE `page_namespace` = "+str(namespace)):
+				results.append( Page(p) )
+		else:
+			for p in self.query("SELECT cl_from FROM categorylinks WHERE `cl_to` = '"+parent.page_title+"'"):
+				page = self.getPage( ID=p[0] )
+				if page.page_namespace == str(namespace):
+					results.append( page )
+		return results
 

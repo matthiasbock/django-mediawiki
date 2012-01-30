@@ -12,9 +12,9 @@ db	= parser.get('test', 'database')
 user	= parser.get('test', 'username')
 pw	= parser.get('test', 'password')
 
-session = mediawiki.Session(host, port, db, user, pw)
+session = mediawiki.Session(host, port, db, user, pw, debug=False)
 
 print [u.user_name for u in session.getUsers()]
-print session.getCategories('Geburtstage')
-print session.getPages('Geburtstage')
+print [c.page_title for c in session.getPages(session.getPage(title='Geburtstage'), namespace=mediawiki.NS_CATEGORY)]
+print [p.page_title for p in session.getPages(session.getPage(title='Geburtstage'), namespace=mediawiki.NS_MAIN)]
 
