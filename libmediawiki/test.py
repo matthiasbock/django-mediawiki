@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: iso-8859-15 -*-
 
-import mediawiki
+from mediawiki import *
 from ConfigParser import RawConfigParser
 
 parser = RawConfigParser()
@@ -12,9 +12,10 @@ db	= parser.get('test', 'database')
 user	= parser.get('test', 'username')
 pw	= parser.get('test', 'password')
 
-session = mediawiki.Session(host, port, db, user, pw, debug=False)
+wiki = MediaWiki(host, port, db, user, pw, debug=False)
 
-print [u.user_name for u in session.getUsers()]
-print [c.page_title for c in session.getPages(session.getPage(title='Geburtstage'), namespace=mediawiki.NS_CATEGORY)]
-print [p.page_title for p in session.getPages(session.getPage(title='Geburtstage'), namespace=mediawiki.NS_MAIN)]
+print [u.user_name for u in wiki.getUsers()]
+print str(len(wiki.getPages()))+' pages total'
+print [c.page_title for c in wiki.getPages(wiki.getPage(title='Geburtstage'), namespace=NS_CATEGORY)]
+print [p.page_title for p in wiki.getPages(wiki.getPage(title='Geburtstage'), namespace=NS_MAIN)]
 

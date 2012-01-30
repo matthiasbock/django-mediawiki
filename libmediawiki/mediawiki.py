@@ -16,7 +16,7 @@ class Page:
 		self.page_namespace = q[1]
 		self.page_title = q[2]
 
-class Session:
+class MediaWiki:
 	def __init__(self, host='localhost', port=3306, database='mediawiki', username='guest', password='', debug=True):
 		self.database = MySQLdb.connect(host, username, password, database, port=int(port))
 		self.database.apilevel = "2.0"
@@ -59,7 +59,7 @@ class Session:
 		else:
 			for p in self.query("SELECT cl_from FROM categorylinks WHERE `cl_to` = '"+parent.page_title+"'"):
 				page = self.getPage( ID=p[0] )
-				if page.page_namespace == str(namespace):
+				if str(page.page_namespace) == str(namespace):
 					results.append( page )
 		return results
 
