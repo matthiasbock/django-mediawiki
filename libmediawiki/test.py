@@ -5,5 +5,7 @@ import mediawiki
 
 session = mediawiki.Session( host='localhost', database='wiki', username='john', passwort='doe' )
 
-print session.getusers()
+print session.getUsers()
+print session.getCategories('Geburtstage')
+print session.getPages('Geburtstage')
 
