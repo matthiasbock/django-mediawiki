@@ -7,7 +7,7 @@ from user import User
 
 class Session:
 	def __init__(self, host='localhost', port=3306, database=None, username=None, password=None):
-		self.database = MySQLdb.connect(host, user, password, db)
+		self.database = MySQLdb.connect(host, username, password, database, port=int(port))
 		self.database.apilevel = "2.0"
 		self.database.threadsafety = 2
 		self.database.paramstyle = "format"
@@ -19,9 +19,9 @@ class Session:
 
 	def getUsers(self):
 		results = []
-		for user in self.database.user.SELECT():
-			results.append( User(user) )
-		return results
+#		for user in self.query():
+#			results.append( User(user) )
+		return self.query("""FROM "auth_user" SELECT *""") #results
 
 	def getCategories(parent):
 		return[]
