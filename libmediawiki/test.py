@@ -6,11 +6,11 @@ from ConfigParser import RawConfigParser
 
 parser = RawConfigParser()
 parser.read('test.conf')
-host = parser.get('test', 'host')
-port = parser.get('test', 'port')
-db = parser.get('test', 'database')
-user = parser.get('test', 'username')
-pw = parser.get('test', 'password')
+host	= parser.get('test', 'host')
+port	= parser.get('test', 'port')
+db	= parser.get('test', 'database')
+user	= parser.get('test', 'username')
+pw	= parser.get('test', 'password')
 
 session = mediawiki.Session(host, port, db, user, pw)
 
