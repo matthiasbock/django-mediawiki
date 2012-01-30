@@ -14,7 +14,7 @@ pw = parser.get('test', 'password')
 
 session = mediawiki.Session(host, port, db, user, pw)
 
-print session.getUsers()
+print [u.user_name for u in session.getUsers()]
 print session.getCategories('Geburtstage')
 print session.getPages('Geburtstage')
 
