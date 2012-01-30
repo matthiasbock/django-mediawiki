@@ -19,3 +19,4 @@ print str(len(wiki.getPages()))+' pages total'
 print [c.page_title for c in wiki.getPages(wiki.getPage(title='Geburtstage'), namespace=NS_CATEGORY)]
 print [p.page_title for p in wiki.getPages(wiki.getPage(title='Geburtstage'), namespace=NS_MAIN)]
 
+print [r.rev_comment for r in wiki.getPage(title='Geburtstage', namespace=NS_CATEGORY).getRevisions()]
