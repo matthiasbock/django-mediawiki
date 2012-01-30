@@ -7,7 +7,7 @@ from Defines import *
 def query(db, cmd, debug=False):
 	cursor = db.cursor()
 	if debug:
-		print q
+		print cmd
 	cursor.execute(cmd)
 	result = cursor.fetchall() 
 	if debug:
@@ -21,6 +21,15 @@ class User:
 		self.user_name = q[1]
 		self.user_real_name = q[2]
 
+class Text:
+	def __init__(self, db, q):
+		self.database = db
+		self.old_id = q[0]
+		self.old_text = q[1]
+
+	def __str__(self):
+		return self.old_text
+
 class Revision:
 	def __init__(self, db, q):
 		self.database = db
@@ -29,6 +38,14 @@ class Revision:
 		self.rev_text_id = q[2]
 		self.rev_comment = q[3]
 		self.rev_user = q[4]
+		self.rev_timestamp = q[6]
+		self.rev_minor_edit = str(q[7]) == '1'
+
+	def getText(self):
+		q = query(self.database, 'SELECT * FROM text WHERE `old_id` = '+str(self.rev_text_id))
+		if len(q) == 1:
+			return Text( self.database, q[0] )
+		return None
 
 class Page:
 	def __init__(self, db, q):
@@ -36,12 +53,21 @@ class Page:
 		self.page_id = q[0]
 		self.page_namespace = q[1]
 		self.page_title = q[2]
+		self.page_counter = q[4]
+		self.page_is_redirect = str(q[5]) == '1'
+		self.page_latest = q[9]
 
 	def getRevisions(self):
 		results = []
 		for rev in query(self.database, 'SELECT * FROM revision WHERE `rev_page` = '+str(self.page_id)):
 			results.append( Revision(self.database, rev) )
 		return results
+
+	def getText(self):
+		q = query(self.database, 'SELECT * FROM text WHERE `old_id` = '+str(self.page_latest))
+		if len(q) == 1:
+			return Text( self.database, q[0] )
+		return None
 
 class MediaWiki:
 	def __init__(self, host='localhost', port=3306, database='mediawiki', username='guest', password='', debug=True):
@@ -57,29 +83,48 @@ class MediaWiki:
 	def getUsers(self):
 		results = []
 		for user in self.query("SELECT * FROM user"):
-			results.append( User(user) )
+			results.append( User(self.database, user) )
 		return results
 
-	def getPage(self, ID=None, title=None):
+	def getPage(self, ID=None, title=None, namespace=None):
+
+		query = "SELECT * FROM page WHERE "
+		AND = False
+
 		if ID is not None:
-			q = self.query("SELECT * FROM page WHERE `page_id` = "+str(ID))
-			if len(q) == 1:
-				return Page(self.database, q[0])
-		elif title is not None:
-			q = self.query("SELECT * FROM page WHERE `page_title` = '"+str(title)+"'")
-			if len(q) == 1:
-				return Page(self.database, q[0])
+			query += "`page_id` = "+str(ID)+" "
+			AND = True
+
+		if title is not None:
+			if AND:
+				query += "AND "
+			query += "`page_title` = '"+str(title)+"'"
+			AND = True
+
+		if namespace is not None:
+			if AND:
+				query += "AND "
+			query += "`page_namespace` = "+str(namespace)
+
+		result = self.query(query)
+		if len(result) == 1:
+			return Page(self.database, result[0])
 		return None
 
-	def getPages(self, parent=None, namespace=NS_MAIN):
+	def getPages(self, parent=None, namespace=None):
 		results = []
 		if parent is None:
-			for p in self.query("SELECT * FROM page WHERE `page_namespace` = "+str(namespace)):
+			q = "SELECT * FROM page"
+			if namespace is not None:
+				q += " WHERE `page_namespace` = "+str(namespace)
+			for p in self.query(q):
 				results.append( Page(self.database, p) )
 		else:
 			for p in self.query("SELECT cl_from FROM categorylinks WHERE `cl_to` = '"+parent.page_title+"'"):
 				page = self.getPage( ID=p[0] )
-				if str(page.page_namespace) == str(namespace):
+				if (namespace is None or str(page.page_namespace) == str(namespace)) and page is not None:
 					results.append( page )
+				else:
+					del page
 		return results
 
