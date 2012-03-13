@@ -9,8 +9,8 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASE = {
-	'wiki': {
+DATABASES = {
+	'default': {
 		'ENGINE':	'django.db.backends.mysql',
 		'NAME':		'wiki',
 		'USER': 	'Django',
@@ -19,7 +19,7 @@ DATABASE = {
 		'PORT':		'',
 		}
 	}
-DATABASES = { 'default': DATABASE['wiki'] }
+DATABASES = { 'wiki': DATABASES['default'] }
 
 TIME_ZONE = 'America/Chicago'
 LANGUAGE_CODE = 'de-DE'
