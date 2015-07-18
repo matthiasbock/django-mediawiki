@@ -1,0 +1,5 @@
+  * [Project](Project.md)
+  * [MediaWiki](MediaWiki.md)
+  * [Roadmap](Roadmap.md)
+  * [Database layout](Database.md)
+  * [Django database compatibility](DatabaseCompatibility.md)
